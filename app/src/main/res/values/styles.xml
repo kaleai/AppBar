@@ -1,0 +1,21 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@color/color_primary_green_dark</item>
+        
+        <!-- 默认是AppBar的背景色（如需修改，可以去appBarStyle中配置） -->
+        <item name="colorPrimary">@color/color_primary_green</item>
+        <!-- 默认是AppBar的title颜色（如需修改，可以去appBarStyle中配置） -->
+        <item name="android:textColorPrimary">@android:color/white</item> 
+        
+        <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation</item>
+        <item name="appBarStyle">@style/AppBar</item>
+        <item name="menuTextStyle">@style/Menu.Text</item>
+        <item name="menuImageStyle">@style/Menu.Image</item>
+    </style>
+
+    
+    
+</resources>

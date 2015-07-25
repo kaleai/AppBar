@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MenuText">
+        <attr name="menuTextStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="MenuImage">
+        <attr name="menuImageStyle" format="reference" />
+    </declare-styleable>
+    
+    <declare-styleable name="MenuSpinner">
+        <attr name="menuSpinnerStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="AppBar">
+        <attr name="appBarStyle" format="reference" />
+        <attr name="menu1" format="reference" />
+        <attr name="menu2" format="reference" />
+        <attr name="menu3" format="reference" />
+        <attr name="menu4" format="reference" />
+        <attr name="menu5" format="reference" />
+    </declare-styleable>
+    
+</resources>
