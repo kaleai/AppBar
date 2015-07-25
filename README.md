@@ -7,6 +7,8 @@
 结果：  
 ![](./screenshot/preview.png)
 ### 添加依赖
+注意：目前只是最初的版本，可能不够完善，后续会慢慢完善。  
+
 1.添加JitPack仓库
   
 ```  
@@ -18,7 +20,7 @@ repositories {
 ```   
 ```  
 dependencies {
-		compile 'com.github.tianzhijiexian:还没做好'
+		compile 'com.github.tianzhijiexian:AppBar:1.0'
 }    
 ```  
 
