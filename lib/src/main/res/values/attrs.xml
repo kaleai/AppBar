@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
     <declare-styleable name="MenuText">
         <attr name="menuTextStyle" format="reference" />
     </declare-styleable>
@@ -14,6 +15,7 @@
 
     <declare-styleable name="AppBar">
         <attr name="appBarStyle" format="reference" />
+        <attr name="menuWidth" format="dimension" />
         <attr name="menu1" format="reference" />
         <attr name="menu2" format="reference" />
         <attr name="menu3" format="reference" />

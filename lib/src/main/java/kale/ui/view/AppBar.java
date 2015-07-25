@@ -1,5 +1,6 @@
 package kale.ui.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.internal.widget.TintTypedArray;
@@ -21,9 +22,9 @@ import kale.lib.R;
  */
 public class AppBar extends Toolbar {
 
-    private static final int MENU0 = 0Xee;
+    private static final int START = 0xabc;
 
-    public static final int MENU01 = MENU0 + 1;
+    public static final int MENU01 = START + 1;
 
     public static final int Menu02 = MENU01 + 1;
 
@@ -47,7 +48,7 @@ public class AppBar extends Toolbar {
         super(context, attrs, defStyleAttr);
 
         res = getResources();
-        init(attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr);
     }
 
     private String getStr(int id) {
@@ -64,7 +65,7 @@ public class AppBar extends Toolbar {
         }
     }
 
-    private void init(AttributeSet attrs, int defStyleAttr) {
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs, R.styleable.AppBar, defStyleAttr, 0);
 
         int menu01Id = a.getResourceId(R.styleable.AppBar_menu1, 0);
@@ -75,13 +76,12 @@ public class AppBar extends Toolbar {
 
         a.recycle();
 
+        //设定布局的各种参数
+        Toolbar.LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, Gravity.RIGHT);
+
         int[] menuIds = {menu01Id, menu02Id, menu03Id, menu04Id, menu05Id};
 
         View menuV;
-
-        //设定布局的各种参数
-        Toolbar.LayoutParams params = new Toolbar.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, Gravity.RIGHT);
-
         for (int menuId : menuIds) {
             if (menuId == 0) {
                 continue;
@@ -89,19 +89,27 @@ public class AppBar extends Toolbar {
 
             String text;
             if ((text = getStr(menuId)) != null) {
-                menuV = new TextView(getContext(), null, R.attr.menuTextStyle);
+                menuV = new TextView(context, null, R.attr.menuTextStyle);
                 ((TextView) menuV).setText(text);
-
             } else {
-                menuV = new ImageView(getContext(), null, R.attr.menuImageStyle);
+                menuV = new ImageView(context, null, R.attr.menuImageStyle);
                 ((ImageView) menuV).setImageResource(menuId);
                 ((ImageView) menuV).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             }
 
-            menuV.setId(MENU0 + 1);
+            menuV.setId(START + 1);
             menuV.setLayoutParams(params);
             addView(menuV);
         }
+    }
+
+    public void canfinishActivity() {
+        setNavigationOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Activity) getContext()).finish();
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")

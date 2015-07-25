@@ -6,16 +6,32 @@
     tools:context=".MainActivity"
     >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    
     <kale.ui.view.AppBar
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
         app:title="@string/title"
-        app:navigationIcon="@drawable/abc_ic_ab_back_mtrl_am_alpha"
         app:menu1="@string/app_name"
         app:menu2="@drawable/abc_ic_menu_share_mtrl_alpha"
         app:menu3="@string/action_settings"
-        app:menu4="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+        app:menu4="@drawable/abc_ab_share_pack_mtrl_alpha"
+        app:menu5="@drawable/abc_dialog_material_background_dark"
         />
-    
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kale"
+        android:id="@+id/button"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/menu_selector"
+        />
+
 </RelativeLayout>

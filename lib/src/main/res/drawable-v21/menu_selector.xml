@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/menu_selected"
+    ><!-- 按压的颜色 -->
+    <!-- 底部背景的drawable/color/bitmap -->
+    <!--<item android:drawable="@color/red" />-->
+</ripple>
+
+
+
+
+
+
