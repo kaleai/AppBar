@@ -22,13 +22,15 @@ public class MainActivity extends AppCompatActivity {
         AppBar appBar = (AppBar) findViewById(R.id.app_bar);
 
         TextView view = (TextView) findViewById(AppBar.MENU01);// 可以通过id直接找到meu控件
-        View view1 = appBar.getMenu01(); // 通过appbar来获得menu对象
+        View view1 = appBar.getMenu01(); // 也可以通过appbar来获得menu对象，二者等价
 
         appBar.getTitleView();
         appBar.getNavButton();
         appBar.getSubtitleView();
+        appBar.getLogoView();
+        appBar.getCollapseButton();
         // 调用此方法后，点击toolbar左边按钮会让activity finish
-        appBar.canfinishActivity();
+        appBar.canFinishActivity();
         // 还有各种toolbar本身的方法……
 
         appBar.inflateMenu(R.menu.menu_main); // 因为本身就是toolbar，所以仍旧可以装入menu资源

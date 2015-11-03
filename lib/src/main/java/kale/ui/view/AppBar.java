@@ -14,7 +14,8 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 
-import kale.lib.R;
+import kale.lib.appbar.R;
+
 
 /**
  * @author Jack Tony
@@ -41,12 +42,11 @@ public class AppBar extends Toolbar {
     }
 
     public AppBar(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.appBarStyle);
+        this(context, attrs, 0);
     }
 
     public AppBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-
+        super(context, attrs, R.attr.toolbarStyle);
         res = getResources();
         init(context, attrs, defStyleAttr);
     }
@@ -94,7 +94,6 @@ public class AppBar extends Toolbar {
             } else {
                 menuV = new ImageView(context, null, R.attr.menuImageStyle);
                 ((ImageView) menuV).setImageResource(menuId);
-                ((ImageView) menuV).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             }
 
             menuV.setId(START + 1);
@@ -103,7 +102,7 @@ public class AppBar extends Toolbar {
         }
     }
 
-    public void canfinishActivity() {
+    public void canFinishActivity() {
         setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,44 +111,63 @@ public class AppBar extends Toolbar {
         });
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends View> T getMenu01() {
         return (T) findViewById(MENU01);
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends View> T getMenu02() {
         return (T) findViewById(Menu02);
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends View> T getMenu03() {
         return (T) findViewById(MENU03);
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends View> T getMenu04() {
         return (T) findViewById(MENU04);
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends View> T getMenu05() {
         return (T) findViewById(MENU05);
     }
 
 
+    /**
+     * 得到标题按钮
+     */
     public TextView getTitleView() {
         return (TextView) getSubView("mTitleTextView");
     }
 
+    /**
+     * 得到子标题
+     */
     public TextView getSubtitleView() {
         return ((TextView) getSubView("mSubtitleTextView"));
     }
 
+    /**
+     * 得到左边的导航按钮
+     */
     public ImageButton getNavButton() {
         return (ImageButton) getSubView("mNavButtonView");
     }
-    
+
+    /**
+     * 得到logo的视图
+     */
+    public ImageView getLogoView() {
+        return ((ImageView) getSubView("mLogoView"));
+    }
+
+    /**
+     * 得到右边的折叠按钮视图
+     */
+    public ImageButton getCollapseButton() {
+        return (ImageButton) getSubView("mCollapseButtonView");
+    }
+
+
     private View getSubView(String name) {
         Field field;
         try {

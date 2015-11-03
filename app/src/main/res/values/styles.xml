@@ -1,24 +1,94 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowNoTitle">true</item>
         
-        <item name="colorPrimaryDark">@color/color_primary_green_dark</item>
-        
-        <!-- 默认是AppBar的背景色（如需修改，可以去appBarStyle中配置） -->
+        <!-- 默认是toolbar的背景色（也可以去toolbarStyle中配置android:background） -->
         <item name="colorPrimary">@color/color_primary_green</item>
-        <!-- 默认是AppBar的title颜色（如需修改，可以去appBarStyle中配置） -->
-        <item name="android:textColorPrimary">@android:color/white</item> 
-        
-        <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation</item>
-        <item name="appBarStyle">@style/AppBar</item>
-        <item name="menuWidth">@dimen/menuWidth</item>
-        <item name="menuTextStyle">@style/Menu.Text</item>
-        <item name="menuImageStyle">@style/Menu.Image</item>
+        <!-- 默认是toolbar的title颜色（也可以去toolbarStyle中配置titleTextAppearance） -->
+        <item name="android:textColorPrimary">@android:color/darker_gray</item>
+        <!-- toolbar的样式 -->
+        <item name="toolbarStyle">@style/Toolbar</item>
+        <!-- toolbar上面的menu整体样式 -->
+        <item name="toolbarNavigationButtonStyle">@style/Toolbar.Menu</item>
+        <!-- toolbar上面的menu的样式 -->
+        <item name="menuTextStyle">@style/Toolbar.Menu.Text</item>
+        <item name="menuImageStyle">@style/Toolbar.Menu.Image</item>
+    </style>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- 这里为了说明方便，把style定义到这里了，实际中请新建一个toolbar.xml放入下列style -->
+    
+    
+    <!-- 设置toolbar的整体属性 -->
+    <style name="Toolbar" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Title.Toolbar</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="titleMargins">0dp</item>
+        <item name="maxButtonHeight">56dp</item>
+        <item name="collapseIcon">?attr/homeAsUpIndicator</item>
+        <item name="collapseContentDescription">@string/abc_toolbar_collapse_description</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="android:paddingLeft">@dimen/abc_action_bar_default_padding_start_material</item>
+        <item name="android:paddingRight">@dimen/abc_action_bar_default_padding_end_material</item>
+
+        <item name="android:minWidth">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?colorPrimary</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="navigationIcon">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
     </style>
 
-    
+    <!-- toolbar 的标题字体 -->
+    <style name="TextAppearance.AppCompat.Title.Toolbar" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <!-- toolbar上面的menu整体样式 -->
+    <style name="Toolbar.Menu" parent="Base.Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <!-- 这里可以设置最小的宽度 -->
+        <item name="android:minWidth">@dimen/menuWidth</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/menu_selector</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="Toolbar.Menu.Text">
+        <!-- 支持textView的各种属性 -->
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#ff0000</item>
+    </style>
+
+    <style name="Toolbar.Menu.Image">
+        <!-- 支持imageView的各种属性 推荐：centerInside-->
+        <item name="android:scaleType">fitXY</item>
+    </style>
     
 </resources>

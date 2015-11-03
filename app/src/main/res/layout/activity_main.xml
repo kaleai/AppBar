@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     >
-
+    
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,9 +19,6 @@
         app:title="@string/title"
         app:menu1="@string/app_name"
         app:menu2="@drawable/abc_ic_menu_share_mtrl_alpha"
-        app:menu3="@string/action_settings"
-        app:menu4="@drawable/abc_ab_share_pack_mtrl_alpha"
-        app:menu5="@drawable/abc_dialog_material_background_dark"
         />
 
     <Button
