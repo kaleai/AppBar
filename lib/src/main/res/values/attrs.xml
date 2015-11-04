@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-    <declare-styleable name="MenuText">
-        <attr name="menuTextStyle" format="reference" />
-    </declare-styleable>
 
-    <declare-styleable name="MenuImage">
-        <attr name="menuImageStyle" format="reference" />
-    </declare-styleable>
-    
-    <declare-styleable name="MenuSpinner">
-        <attr name="menuSpinnerStyle" format="reference" />
+    <declare-styleable name="AppBar.Menu">
+        <attr name="toolbarMenuTextStyle" format="reference" />
+        <attr name="toolbarMenuImageStyle" format="reference" />
+        <attr name="toolbarMenuSpinnerStyle" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="AppBar">

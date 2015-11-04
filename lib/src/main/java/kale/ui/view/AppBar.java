@@ -3,7 +3,7 @@ package kale.ui.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v7.internal.widget.TintTypedArray;
+import android.content.res.TypedArray;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -66,7 +66,7 @@ public class AppBar extends Toolbar {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs, R.styleable.AppBar, defStyleAttr, 0);
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AppBar, defStyleAttr, 0);
 
         int menu01Id = a.getResourceId(R.styleable.AppBar_menu1, 0);
         int menu02Id = a.getResourceId(R.styleable.AppBar_menu2, 0);
@@ -86,13 +86,12 @@ public class AppBar extends Toolbar {
             if (menuId == 0) {
                 continue;
             }
-
             String text;
             if ((text = getStr(menuId)) != null) {
-                menuV = new TextView(context, null, R.attr.menuTextStyle);
+                menuV = new TextView(context, null, R.attr.toolbarMenuTextStyle);
                 ((TextView) menuV).setText(text);
             } else {
-                menuV = new ImageView(context, null, R.attr.menuImageStyle);
+                menuV = new ImageView(context, null, R.attr.toolbarMenuImageStyle);
                 ((ImageView) menuV).setImageResource(menuId);
             }
 

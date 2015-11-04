@@ -58,8 +58,8 @@ dependencies {
         <!-- toolbar上面的menu整体样式 -->
         <item name="toolbarNavigationButtonStyle">@style/Toolbar.Menu</item>
         <!-- toolbar上面的menu的样式 -->
-        <item name="menuTextStyle">@style/Toolbar.Menu.Text</item>
-        <item name="menuImageStyle">@style/Toolbar.Menu.Image</item>
+        <item name="toolbarMenuTextStyle">@style/Toolbar.Menu.Text</item>
+        <item name="toolbarMenuImageStyle">@style/Toolbar.Menu.Image</item>
     </style>
 ```  
 这里的style都是采用的默认style，完全可以自己参考默认style进行定义。
