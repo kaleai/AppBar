@@ -105,7 +105,9 @@ public class AppBar extends Toolbar {
         setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((Activity) getContext()).finish();
+                if (getContext() instanceof Activity) {
+                    ((Activity) getContext()).finish();
+                }
             }
         });
     }

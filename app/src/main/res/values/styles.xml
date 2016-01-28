@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -63,7 +63,7 @@
     <!-- toolbar 的标题字体 -->
     <style name="TextAppearance.AppCompat.Title.Toolbar" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textSize">40sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <!-- toolbar上面的menu整体样式 -->
@@ -88,7 +88,7 @@
 
     <style name="Toolbar.Menu.Image">
         <!-- 支持imageView的各种属性 推荐：centerInside-->
-        <item name="android:scaleType">fitXY</item>
+        <item name="android:scaleType">centerInside</item>
     </style>
     
 </resources>
