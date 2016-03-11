@@ -2,20 +2,26 @@ package kale.ui.view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
+import android.support.annotation.StyleableRes;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import kale.lib.appbar.R;
-
 
 /**
  * @author Jack Tony
@@ -23,151 +29,192 @@ import kale.lib.appbar.R;
  */
 public class AppBar extends Toolbar {
 
-    private static final int START = 0xabc;
+    private static final String TAG = "AppBar";
 
-    public static final int MENU01 = START + 1;
+    private final LayoutParams MENU_LP;
 
-    public static final int Menu02 = MENU01 + 1;
-
-    public static final int MENU03 = Menu02 + 1;
-
-    public static final int MENU04 = MENU03 + 1;
-
-    public static final int MENU05 = MENU04 + 1;
-
-    private Resources res;
+    private static final List<View> MENUS = new ArrayList<>();
 
     public AppBar(Context context) {
         this(context, null);
     }
 
     public AppBar(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, R.attr.toolbarStyle);
     }
 
     public AppBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, R.attr.toolbarStyle);
-        res = getResources();
+        super(context, attrs, defStyleAttr);
+        MENU_LP = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, Gravity.RIGHT);
         init(context, attrs, defStyleAttr);
-    }
-
-    private String getStr(int id) {
-        try {
-            String str = res.getString(id);
-            if (str.indexOf("res") == 0) {
-                // 是图片
-                return null;
-            } else {
-                return str;
-            }
-        } catch (Resources.NotFoundException ex) {
-            return null;
-        }
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AppBar, defStyleAttr, 0);
 
-        int menu01Id = a.getResourceId(R.styleable.AppBar_menu1, 0);
-        int menu02Id = a.getResourceId(R.styleable.AppBar_menu2, 0);
-        int menu03Id = a.getResourceId(R.styleable.AppBar_menu3, 0);
-        int menu04Id = a.getResourceId(R.styleable.AppBar_menu4, 0);
-        int menu05Id = a.getResourceId(R.styleable.AppBar_menu5, 0);
+        final String navBtnGravity = a.getString(R.styleable.AppBar_navigationGravity);
+        final int[] styleableResIds = {R.styleable.AppBar_menu1,
+                R.styleable.AppBar_menu2, R.styleable.AppBar_menu3,
+                R.styleable.AppBar_menu4, R.styleable.AppBar_menu5};
+        List<Integer> menuIds = getResIds(styleableResIds, a);
 
         a.recycle();
 
-        //设定布局的各种参数
-        Toolbar.LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, Gravity.RIGHT);
+        // 1.set nav button
+        ImageButton navButton = getNavButton();
+        if (navButton != null) {
+            Toolbar.LayoutParams lp = (LayoutParams) getNavButton().getLayoutParams();
+            if (!TextUtils.equals(navBtnGravity, "0")) {
+                lp.gravity = Gravity.CENTER_VERTICAL;
+            }
+            getNavButton().setLayoutParams(lp);
+        }
 
-        int[] menuIds = {menu01Id, menu02Id, menu03Id, menu04Id, menu05Id};
-
-        View menuV;
-        for (int menuId : menuIds) {
+        // 2.set menu views
+        for (int i = 0; i < menuIds.size(); i++) {
+            int menuId = menuIds.get(i);
             if (menuId == 0) {
                 continue;
             }
-            String text;
-            if ((text = getStr(menuId)) != null) {
-                menuV = new TextView(context, null, R.attr.toolbarMenuTextStyle);
-                ((TextView) menuV).setText(text);
-            } else {
-                menuV = new ImageView(context, null, R.attr.toolbarMenuImageStyle);
-                ((ImageView) menuV).setImageResource(menuId);
-            }
-
-            menuV.setId(START + 1);
-            menuV.setLayoutParams(params);
-            addView(menuV);
+            final View menuV = initMenuVIew(context, menuId);
+            MENUS.add(menuV);
+            addView(menuV, MENU_LP);
         }
     }
 
-    public void canFinishActivity() {
-        setNavigationOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getContext() instanceof Activity) {
-                    ((Activity) getContext()).finish();
+    public void addMenuView(View v) {
+        MENUS.add(v);
+        addView(v, MENU_LP);
+    }
+
+    @NonNull
+    private View initMenuVIew(Context context, int menuId) {
+        final View menuV;
+
+        String str = getResources().getString(menuId);
+        if (str.startsWith("res/drawable")) {
+            // 是图片
+            menuV = new ImageView(context, null, R.attr.toolbarMenuImageStyle);
+            ((ImageView) menuV).setImageResource(menuId);
+        } else if (str.startsWith("res/layout")) {
+            // 是view的布局文件
+            menuV = LayoutInflater.from(getContext()).inflate(menuId, null);
+        } else {
+            // 是文本
+            menuV = new TextView(context, null, R.attr.toolbarMenuTextStyle);
+            ((TextView) menuV).setText(str);
+
+            /**
+             * Just for preview
+             */
+            if (isInEditMode()) {
+                if (str.endsWith(".xml") || str.endsWith(".png")
+                        || str.endsWith(".jpg")) {
+                    ((TextView) menuV).setText("★");
                 }
             }
-        });
+        }
+        return menuV;
     }
 
-    public <T extends View> T getMenu01() {
-        return (T) findViewById(MENU01);
+    /**
+     * @return menu视图的id数组
+     */
+    private List<Integer> getResIds(@StyleableRes int[] styleResIds, TypedArray a) {
+        List<Integer> ids = new ArrayList<>();
+        for (int resId : styleResIds) {
+            ids.add(a.getResourceId(resId, 0));
+        }
+        return ids;
     }
 
-    public <T extends View> T getMenu02() {
-        return (T) findViewById(Menu02);
+
+    public void canFinishActivity() {
+        final Context context = getContext();
+        if (context instanceof Activity) {
+            setNavigationOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((Activity) context).finish();
+                }
+            });
+        }
     }
 
-    public <T extends View> T getMenu03() {
-        return (T) findViewById(MENU03);
+    public
+    @CheckResult
+    <T extends View> T getMenu01() {
+        return (T) MENUS.get(0);
     }
 
-    public <T extends View> T getMenu04() {
-        return (T) findViewById(MENU04);
+    public
+    @CheckResult
+    <T extends View> T getMenu02() {
+        return (T) MENUS.get(1);
     }
 
-    public <T extends View> T getMenu05() {
-        return (T) findViewById(MENU05);
+    public
+    @CheckResult
+    <T extends View> T getMenu03() {
+        return (T) MENUS.get(2);
     }
 
+    public
+    @CheckResult
+    <T extends View> T getMenu04() {
+        return (T) MENUS.get(3);
+    }
+
+    public
+    @CheckResult
+    <T extends View> T getMenu05() {
+        return (T) MENUS.get(4);
+    }
 
     /**
      * 得到标题按钮
      */
-    public TextView getTitleView() {
+    public
+    @CheckResult
+    TextView getTitleView() {
         return (TextView) getSubView("mTitleTextView");
     }
 
     /**
      * 得到子标题
      */
-    public TextView getSubtitleView() {
+    public
+    @CheckResult
+    TextView getSubtitleView() {
         return ((TextView) getSubView("mSubtitleTextView"));
     }
 
     /**
      * 得到左边的导航按钮
      */
-    public ImageButton getNavButton() {
+    public
+    @CheckResult
+    ImageButton getNavButton() {
         return (ImageButton) getSubView("mNavButtonView");
     }
 
     /**
      * 得到logo的视图
      */
-    public ImageView getLogoView() {
+    public
+    @CheckResult
+    ImageView getLogoView() {
         return ((ImageView) getSubView("mLogoView"));
     }
 
     /**
-     * 得到右边的折叠按钮视图
+     * 得到最右边的可折叠按钮视图
      */
-    public ImageButton getCollapseButton() {
+    public
+    @CheckResult
+    ImageButton getCollapseButton() {
         return (ImageButton) getSubView("mCollapseButtonView");
     }
-
 
     private View getSubView(String name) {
         Field field;
@@ -177,10 +224,8 @@ public class AppBar extends Toolbar {
             View v = (View) field.get(this);
             field.setAccessible(false);
             return v;
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Log.e(TAG, "getSubView: 反射错误，请尽快上报给开发者", e);
         }
         return null;
     }

@@ -8,11 +8,15 @@
     </declare-styleable>
 
     <declare-styleable name="AppBar">
+        <attr name="navigationGravity">
+            <enum name="top" value="0" />
+            <enum name="center_vertical" value="1" />
+        </attr>
         <attr name="menu1" format="reference" />
         <attr name="menu2" format="reference" />
         <attr name="menu3" format="reference" />
         <attr name="menu4" format="reference" />
         <attr name="menu5" format="reference" />
     </declare-styleable>
-    
+
 </resources>

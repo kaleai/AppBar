@@ -1,8 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
+        
+        <!-- 支持toolbar -->
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         
         <!-- 默认是toolbar的背景色（也可以去toolbarStyle中配置android:background） -->
         <item name="colorPrimary">@color/color_primary_green</item>
@@ -41,6 +46,7 @@
     
     <!-- 设置toolbar的整体属性 -->
     <style name="Toolbar" parent="Base.Widget.AppCompat.Toolbar">
+        <!-- 副标题的字体样式-->
         <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Title.Toolbar</item>
         <item name="subtitleTextAppearance">@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
@@ -76,12 +82,12 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/menu_selector</item>
         <item name="android:clickable">true</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
     </style>
 
     <style name="Toolbar.Menu.Text">
         <!-- 支持textView的各种属性 -->
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">#ff0000</item>
     </style>
