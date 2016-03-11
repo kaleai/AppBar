@@ -19,11 +19,10 @@ repositories {
 }
 ```    
 2.在用到的项目中添加依赖
-
-dependencies {
-	compile 'com.github.tianzhijiexian:AppBar:https://github.com/tianzhijiexian/AppBar/releases'
-}    
-
+dependencies {    
+     compile 'com.github.tianzhijiexian:AppBar:[Last Version](https://github.com/tianzhijiexian/AppBar/releases)'    
+}  
+  
 
 ### 思路  
 Android的actionbar机制让我们需要定义各种style，而且actionbar内部的view都是不能直接获得的，在做一些效果的时候比较不方便。最关键的是actionbar的menu定义和初始化是在activity中的，个人认为xml文件中就应该能做好一切的ui，而activity中只是做UI和事件的连接工作。   
@@ -76,23 +75,23 @@ https://github.com/tianzhijiexian/AppBar/blob/master/app/src/main/res/values/sty
 **2. 布局文件**  
 ```XML  
 <kale.ui.view.AppBar
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:navigationIcon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
-        app:title="@string/title"
-        app:menu1="@string/app_name"
-        app:menu2="@drawable/abc_ic_menu_share_mtrl_alpha"
-        app:menu3="@string/action_settings"
-        app:menu4="@drawable/abc_ab_share_pack_mtrl_alpha"
-        app:menu5="@drawable/abc_dialog_material_background_dark"
-        />
+	android:id="@+id/app_bar"
+	android:layout_width="match_parent"
+	android:layout_height="?attr/actionBarSize"
+	app:navigationIcon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+	app:title="@string/title"
+	app:menu1="@string/app_name"
+	app:menu2="@drawable/abc_ic_menu_share_mtrl_alpha"
+	app:menu3="@string/action_settings"
+	app:menu4="@drawable/abc_ab_share_pack_mtrl_alpha"
+	app:menu5="@drawable/abc_dialog_material_background_dark"
+	/>
 ```  
 
 **3. java代码**   
 
 ```JAVA  
-AppBar appBar = (AppBar) findViewById(R.id.app_bar);
+	AppBar appBar = (AppBar) findViewById(R.id.app_bar);
         
         appBar.getMenu01(); // 可以通过appbar来获得menu对象
         appBar.getTitleView();
@@ -109,7 +108,7 @@ AppBar appBar = (AppBar) findViewById(R.id.app_bar);
 
 顺便附上android源码中toolbar的全部attr，以便于进行更加详细的设定：  
 ```XML
-<declare-styleable name="ToolBar">
+    <declare-styleable name="ToolBar">
         <attr name="titleTextAppearance" />
         <attr name="subtitleTextAppearance" />
         <attr name="title" />
