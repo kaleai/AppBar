@@ -19,9 +19,8 @@ repositories {
 }
 ```    
 2.在用到的项目中添加依赖
-dependencies {    
-     compile 'com.github.tianzhijiexian:AppBar:[Last Version](https://github.com/tianzhijiexian/AppBar/releases)'    
-}  
+  
+compile 'com.github.tianzhijiexian:AppBar:[Last Version](https://github.com/tianzhijiexian/AppBar/releases)'    
   
 
 ### 思路  
@@ -136,7 +135,7 @@ https://github.com/tianzhijiexian/AppBar/blob/master/app/src/main/res/values/sty
 ### 开发者
 ![](https://avatars3.githubusercontent.com/u/9552155?v=3&s=460)
 
-Jack Tony: <developer_kale@qq.com>  
+Jack Tony: <developer_kale@foxmail.com>  
 
 
 ### License
