@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         View customMenu = appBar.getMenu03();
         ((TextView) customMenu.findViewById(R.id.menu_tv)).setText("kale");
 
+        appBar.addMenu(R.drawable.nav_icon_add_red);
         appBar.inflateMenu(R.menu.menu_main); // 因为本身就是toolbar，所以仍旧可以装入menu资源
         appBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

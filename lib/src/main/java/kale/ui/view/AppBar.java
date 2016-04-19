@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.CheckResult;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.annotation.StyleableRes;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -33,6 +36,8 @@ public class AppBar extends Toolbar {
 
     private final LayoutParams MENU_LP;
 
+    private final Context context;
+
     private static final List<View> MENUS = new ArrayList<>();
 
     public AppBar(Context context) {
@@ -45,6 +50,7 @@ public class AppBar extends Toolbar {
 
     public AppBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
         MENU_LP = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, Gravity.RIGHT);
         init(context, attrs, defStyleAttr);
     }
@@ -82,9 +88,20 @@ public class AppBar extends Toolbar {
         }
     }
 
-    public void addMenuView(View v) {
-        MENUS.add(v);
+    public AppBar addMenu(View v) {
         addView(v, MENU_LP);
+        return this;
+    }
+
+    /**
+     * 通过资源的id添加menu
+     *
+     * @param menuId [layoutResId,DrawableResId,StringResId]
+     */
+    public <T extends View> T addMenu(@LayoutRes @DrawableRes @StringRes int menuId) {
+        final View menuV = initMenuVIew(context, menuId);
+        addView(menuV, MENU_LP);
+        return (T) menuV;
     }
 
     @NonNull
@@ -98,7 +115,7 @@ public class AppBar extends Toolbar {
             ((ImageView) menuV).setImageResource(menuId);
         } else if (str.startsWith("res/layout")) {
             // 是view的布局文件
-            menuV = LayoutInflater.from(getContext()).inflate(menuId, null);
+            menuV = LayoutInflater.from(context).inflate(menuId, null);
         } else {
             // 是文本
             menuV = new TextView(context, null, R.attr.toolbarMenuTextStyle);
@@ -130,7 +147,6 @@ public class AppBar extends Toolbar {
 
 
     public void canFinishActivity() {
-        final Context context = getContext();
         if (context instanceof Activity) {
             setNavigationOnClickListener(new OnClickListener() {
                 @Override
