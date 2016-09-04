@@ -51,14 +51,14 @@
         <item name="android:minWidth">20dp</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
         <!-- 内边距 -->
-        <item name="android:paddingLeft">@dimen/abc_action_bar_default_padding_start_material</item>
-        <item name="android:paddingRight">@dimen/abc_action_bar_default_padding_end_material</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
         <item name="contentInsetStart">0dp</item>
         
         <item name="android:orientation">horizontal</item>
         <item name="android:background">?colorPrimary</item>
         <!-- 导航按钮 -->
-        <item name="navigationIcon">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
+        <item name="navigationIcon">@android:drawable/ic_menu_search</item>
         <item name="collapseIcon">?attr/homeAsUpIndicator</item>
         <item name="collapseContentDescription">@string/abc_toolbar_collapse_description</item>
         <!-- 标题/副标题的字体样式-->

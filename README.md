@@ -1,11 +1,19 @@
 # AppBar
-通过继承ToolBar制作的简单Actionbar。
+[![](https://jitpack.io/v/tianzhijiexian/AppBar.svg)](https://jitpack.io/#tianzhijiexian/AppBar)  
+
+通过继承ToolBar而实现的灵活、简单AppBar，纯净原生。
+
+---
+
+更改原生ActionBar样式需要定义各种style，这些style真的太难理解了（我花了三天才理解）。ActionBar内部的view还都是不能直接拿到的，很不灵活。  
+我不希望自己写一个导航栏，我希望利用原生控件来满足丰富的定制需求，于是我通过继承ToolBar的方式来做了ActionBar。  
 
 ### 示例   
-编码：
-![](./screenshot/code.png)  
-结果：  
-![](./screenshot/preview.png)  
+
+![](./screenshot/preview.png)
+
+![](./screenshot/code.png)   
+
 
 ### 添加依赖
 
@@ -19,23 +27,8 @@ repositories {
 }
 ```    
 2.在用到的项目中添加依赖
-  
-compile 'com.github.tianzhijiexian:AppBar:[Last Version](https://github.com/tianzhijiexian/AppBar/releases)'    
-  
 
-### 思路  
-Android的actionbar机制让我们需要定义各种style，而且actionbar内部的view都是不能直接获得的，在做一些效果的时候比较不方便。最关键的是actionbar的menu定义和初始化是在activity中的，个人认为xml文件中就应该能做好一切的ui，而activity中只是做UI和事件的连接工作。   
-于是，我想自己定义一个actionbar。在做的时候发现自己定义一个actionbar是很困难的，无法照顾到所有需求，什么自动折叠menu这样的特殊操作比较难做。在综合考虑之下，我通过继承ToolBar的方式来做actionbar。  
-
-这里分享几个感悟：  
-
-**1. 为啥actionbar不是放在xml中，而是要用activity来设置呢？**  
-
- 因为actionbar这个东西很多页面都需要引用，如果做成单个的控件，那么就需要重复引用多次，不方便。放在activity中的原因是可以将actionbar这种特殊的、在整个应用中样子都不太会变的view进行统一管理。但是不好之处就是需要各种style，而且比较难做动画效果。于是官方抛弃了actionbar，而是推出了toolbar。这样的好处就是可以自己灵活管理这个view，在现在这个actionbar都要很多动画的年代，老旧古板的actionbar必然被抛弃。  
-
-**2. 为啥actionbar的menu要放在一个独立的xml中写？**  
-
-   因为actionbar的menu样子都差不多，之前的设计方案是希望把这些样子基本一样的view做统一管理，一个style定义好了所有menu的样式。但是android又没有给view提供这样的机制，于是就建立了一个menu的xml来把这些menu不同的地方进行编写。至于样式和大小什么的，都不用管了，style文件会帮你搞定。这也是变和不变隔离的思想。但问题又来了，这样做的坏处就是写一个页面很痛苦，首先xml中不能预览actionbar，而且在activity中还需要set一下actionbar。想要写menu还得写一个xml文件，在activity中进行create。最终，写一个menu功能需要动三个文件，很麻烦，大大降低了编码的舒适感。  
+compile 'com.github.tianzhijiexian:AppBar:[Last Version](https://github.com/tianzhijiexian/AppBar/releases)' (<-click it)   
 
 ### 使用方式    
 
@@ -59,24 +52,22 @@ Android的actionbar机制让我们需要定义各种style，而且actionbar内�
         <item name="android:textColorPrimary">@android:color/darker_gray</item>
         <!-- toolbar的样式 -->
         <item name="toolbarStyle">@style/Toolbar</item>
-        <!-- toolbar上面的menu整体样式 -->
+        <!-- toolbar上的menu整体样式 -->
         <item name="toolbarNavigationButtonStyle">@style/Toolbar.Menu</item>
-        <!-- toolbar上面的menu的样式 -->
+        <!-- toolbar上的menu的样式 -->
         <item name="toolbarMenuTextStyle">@style/Toolbar.Menu.Text</item>
         <item name="toolbarMenuImageStyle">@style/Toolbar.Menu.Image</item>
     </style>
 ```  
-这里的style都是采用的默认style，完全可以自己参考默认style进行定义。  
-
-属性详解：  
+这里的style都是采用的系统默认style，你完全可以自己参考默认style进行定义。属性详解：
 https://github.com/tianzhijiexian/AppBar/blob/master/app/src/main/res/values/styles.xml
 
 **2. 布局文件**  
 ```XML  
 <kale.ui.view.AppBar
-	android:id="@+id/app_bar"
 	android:layout_width="match_parent"
 	android:layout_height="?attr/actionBarSize"
+
 	app:navigationIcon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
 	app:title="@string/title"
 	app:menu1="@string/app_name"
@@ -90,19 +81,19 @@ https://github.com/tianzhijiexian/AppBar/blob/master/app/src/main/res/values/sty
 **3. java代码**   
 
 ```JAVA  
-	AppBar appBar = (AppBar) findViewById(R.id.app_bar);
-        
-        appBar.getMenu01(); // 可以通过appbar来获得menu对象
-        appBar.getTitleView();
-        appBar.getNavButton();
-        appBar.getSubtitleView();
-        appBar.getLogoView();
-        appBar.getCollapseButton();
-        appBar.canFinishActivity(); // 调用此方法后，点击toolbar左边按钮会让activity finish
-        // 还有各种toolbar本身的方法……
-        
-        View customMenu = appBar.getMenu03();
-        ((TextView) customMenu.findViewById(R.id.menu_tv)).setText("kale");
+AppBar appBar = (AppBar) findViewById(R.id.app_bar);
+
+appBar.getMenu01(); // 可以通过appbar来获得menu对象
+appBar.getTitleView();
+appBar.getNavButton();
+appBar.getSubtitleView();
+appBar.getLogoView();
+appBar.getCollapseButton();
+appBar.canFinishActivity(); // 调用此方法后，点击toolbar左边按钮会让activity finish
+// 还有各种toolbar本身的方法……
+
+View customMenu = appBar.getMenu03();
+((TextView) customMenu.findViewById(R.id.menu_tv)).setText("kale");
 ```  
 
 顺便附上android源码中toolbar的全部attr，以便于进行更加详细的设定：  
@@ -132,15 +123,25 @@ https://github.com/tianzhijiexian/AppBar/blob/master/app/src/main/res/values/sty
     </declare-styleable>  
 ```   
 
+### 感悟  
+
+**为什么ActionBar不是放在xml中，而是要在Activity来设置呢？**  
+
+ 因为ActionBar会复用在很多页面，如果做成单个的控件，那么几乎每个页面都需要放置这样一个view，不够统一。早期android的设计是希望ActionBar的样式全局唯一，Activity仅需要对ActionBar做差异性处理即可，这个设计不无道理。但因为ActionBar样式的不灵活和诸多原因，官方推出了ToolBar。
+
+**为什么ActionBar的menu要放在一个独立的xml中写？**  
+
+   之前的设计方案是把ActionBar整体的样式用style来定义，ActionBar的具体事件在Activity中实现，但不希望Activity自身做太多view相关的操作，同时为了方便静态预览（xml），就建立了一个menu的目录来存放不同页面menu的xml配置。这是变和不变隔离的思想，但解耦必然会产生文件的增多，想要写一个ActionBar我们需要一个menu的xml文件，然后在activity中进行create和处理按钮事件，不够方便。  
+
 ### 开发者
-![](https://avatars3.githubusercontent.com/u/9552155?v=3&s=460)
+![kale](https://avatars3.githubusercontent.com/u/9552155?v=3&s=460)
 
 Jack Tony: <developer_kale@foxmail.com>  
 
 
 ### License
 
-    Copyright 2015 Jack Tony
+    Copyright 2016-2019 Jack Tony
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

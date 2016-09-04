@@ -7,6 +7,7 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleableRes;
 import android.support.v7.widget.Toolbar;
@@ -32,13 +33,11 @@ import kale.lib.appbar.R;
  */
 public class AppBar extends Toolbar {
 
-    private static final String TAG = "AppBar";
-
-    private final LayoutParams MENU_LP;
+    private final LayoutParams menuLp;
 
     private final Context context;
 
-    private static final List<View> MENUS = new ArrayList<>();
+    private final List<View> menuList;
 
     public AppBar(Context context) {
         this(context, null);
@@ -51,7 +50,8 @@ public class AppBar extends Toolbar {
     public AppBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
-        MENU_LP = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, Gravity.RIGHT);
+        menuList = new ArrayList<>();
+        menuLp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, Gravity.RIGHT);
         init(context, attrs, defStyleAttr);
     }
 
@@ -69,11 +69,11 @@ public class AppBar extends Toolbar {
         // 1.set nav button
         ImageButton navButton = getNavButton();
         if (navButton != null) {
-            Toolbar.LayoutParams lp = (LayoutParams) getNavButton().getLayoutParams();
+            Toolbar.LayoutParams lp = (LayoutParams) navButton.getLayoutParams();
             if (!TextUtils.equals(navBtnGravity, "0")) {
                 lp.gravity = Gravity.CENTER_VERTICAL;
             }
-            getNavButton().setLayoutParams(lp);
+            navButton.setLayoutParams(lp);
         }
 
         // 2.set menu views
@@ -83,13 +83,13 @@ public class AppBar extends Toolbar {
                 continue;
             }
             final View menuV = initMenuVIew(context, menuId);
-            MENUS.add(menuV);
-            addView(menuV, MENU_LP);
+            menuList.add(menuV);
+            addView(menuV, menuLp);
         }
     }
 
     public AppBar addMenu(View v) {
-        addView(v, MENU_LP);
+        addView(v, menuLp);
         return this;
     }
 
@@ -100,7 +100,7 @@ public class AppBar extends Toolbar {
      */
     public <T extends View> T addMenu(@LayoutRes @DrawableRes @StringRes int menuId) {
         final View menuV = initMenuVIew(context, menuId);
-        addView(menuV, MENU_LP);
+        addView(menuV, menuLp);
         return (T) menuV;
     }
 
@@ -160,38 +160,38 @@ public class AppBar extends Toolbar {
     public
     @CheckResult
     <T extends View> T getMenu01() {
-        return (T) MENUS.get(0);
+        return (T) menuList.get(0);
     }
 
     public
     @CheckResult
     <T extends View> T getMenu02() {
-        return (T) MENUS.get(1);
+        return (T) menuList.get(1);
     }
 
     public
     @CheckResult
     <T extends View> T getMenu03() {
-        return (T) MENUS.get(2);
+        return (T) menuList.get(2);
     }
 
     public
     @CheckResult
     <T extends View> T getMenu04() {
-        return (T) MENUS.get(3);
+        return (T) menuList.get(3);
     }
 
     public
     @CheckResult
     <T extends View> T getMenu05() {
-        return (T) MENUS.get(4);
+        return (T) menuList.get(4);
     }
 
     /**
      * 得到标题按钮
      */
     public
-    @CheckResult
+    @CheckResult @Nullable
     TextView getTitleView() {
         return (TextView) getSubView("mTitleTextView");
     }
@@ -200,7 +200,7 @@ public class AppBar extends Toolbar {
      * 得到子标题
      */
     public
-    @CheckResult
+    @CheckResult @Nullable
     TextView getSubtitleView() {
         return ((TextView) getSubView("mSubtitleTextView"));
     }
@@ -209,7 +209,7 @@ public class AppBar extends Toolbar {
      * 得到左边的导航按钮
      */
     public
-    @CheckResult
+    @CheckResult @Nullable
     ImageButton getNavButton() {
         return (ImageButton) getSubView("mNavButtonView");
     }
@@ -218,7 +218,7 @@ public class AppBar extends Toolbar {
      * 得到logo的视图
      */
     public
-    @CheckResult
+    @CheckResult @Nullable
     ImageView getLogoView() {
         return ((ImageView) getSubView("mLogoView"));
     }
@@ -227,11 +227,12 @@ public class AppBar extends Toolbar {
      * 得到最右边的可折叠按钮视图
      */
     public
-    @CheckResult
+    @CheckResult @Nullable
     ImageButton getCollapseButton() {
         return (ImageButton) getSubView("mCollapseButtonView");
     }
 
+    @Nullable
     private View getSubView(String name) {
         Field field;
         try {
@@ -241,7 +242,7 @@ public class AppBar extends Toolbar {
             field.setAccessible(false);
             return v;
         } catch (Exception e) {
-            Log.e(TAG, "getSubView: 反射错误，请尽快上报给开发者", e);
+            Log.e("AppBar", "getSubView: 反射错误，请尽快上报给开发者", e);
         }
         return null;
     }

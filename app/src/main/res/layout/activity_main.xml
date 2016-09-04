@@ -11,6 +11,7 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        
         app:menu1="@string/app_name"
         app:menu2="@drawable/nav_icon_add_red"
         app:menu3="@layout/menu_view"
