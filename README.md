@@ -12,8 +12,21 @@
 
 ![](./screenshot/preview.png)
 
-![](./screenshot/code.png)   
+```java
+<kale.ui.view.AppBar
+	android:id="@+id/app_bar"
+	android:layout_width="match_parent"
+	android:layout_height="?attr/actionBarSize"
 
+	app:menu1="@string/icon_settings" // text menu
+	app:menu2="@drawable/icon_publish" // icon menu
+	app:menu3="@layout/menu_view_layout" // custom menu
+	app:navigationGravity="top"
+	app:title="Title" // title
+	/>
+```
+
+![](./screenshot/code.png)   
 
 ### 添加依赖
 
@@ -96,7 +109,13 @@ View customMenu = appBar.getMenu03();
 ((TextView) customMenu.findViewById(R.id.menu_tv)).setText("kale");
 ```  
 
-顺便附上android源码中toolbar的全部attr，以便于进行更加详细的设定：  
+**4.其他**   
+
+如果你出现无法预览的情况，请设置好自己的主题：
+
+![](./screenshot/theme.png)
+
+附上android源码中toolbar的全部attr，以便于进行更加详细的设定：  
 ```XML
     <declare-styleable name="ToolBar">
         <attr name="titleTextAppearance" />
